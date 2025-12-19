@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+void displayMatrix(int r, int c, int matrix[10][10]) {
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            printf("%d  ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void addMatrices(int r, int c, int A[10][10], int B[10][10]) {
+    int sum[10][10];
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            sum[i][j] = A[i][j] + B[i][j];
+        }
+    }
+    displayMatrix(r, c, sum);
+}
+
+void transposeMatrix(int r, int c, int A[10][10]) {
+    int trans[10][10];
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            trans[j][i] = A[i][j];
+        }
+    }
+    displayMatrix(c, r, trans);
+}
+
+void multiplyMatrices(int r1, int c1, int r2, int c2, int A[10][10], int B[10][10]) {
+    if (c1 != r2) {
+        printf("Multiplication not possible.\n");
+        return;
+    }
+    int prod[10][10] = {0};
+    for (int i = 0; i < r1; i++) {
+        for (int j = 0; j < c2; j++) {
+            for (int k = 0; k < c1; k++) {
+                prod[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    displayMatrix(r1, c2, prod);
+}
+
+int main() {
+    int r, c, A[10][10], B[10][10];
+
+    printf("Enter rows and columns: ");
+    scanf("%d %d", &r, &c);
+
+    printf("Enter Matrix A elements:\n");
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++) scanf("%d", &A[i][j]);
+
+    printf("Enter Matrix B elements:\n");
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++) scanf("%d", &B[i][j]);
+
+    printf("\n--- Addition ---\n");
+    addMatrices(r, c, A, B);
+
+    printf("\n--- Transpose of A ---\n");
+    transposeMatrix(r, c, A);
+
+    printf("\n--- Multiplication (A * B) ---\n");
+    multiplyMatrices(r, c, r, c, A, B);
+
+    return 0;
+}
